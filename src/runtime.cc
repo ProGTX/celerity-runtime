@@ -12,6 +12,7 @@
 
 #include <mpi.h>
 
+#include "affinity.imp.h"
 #include "buffer.h"
 #include "buffer_manager.h"
 #include "command_graph.h"
@@ -95,6 +96,12 @@ namespace detail {
 		// Create config next, as it initializes the logger to the correct level
 		cfg = std::make_unique<config>(argc, argv, *default_logger);
 		graph_logger->set_level(cfg->get_log_level());
+
+		uint32 cores;
+		if((cores = affinity_cores_available()) < min_cores_needed) {
+			std::string err_msg = "NOT ENOUGH CORES. AVAILABLE:" + std::to_string(cores);
+			default_logger->warn(err_msg);
+		}
 
 		experimental::bench::detail::user_benchmarker::initialize(*cfg, static_cast<node_id>(world_rank));
 
