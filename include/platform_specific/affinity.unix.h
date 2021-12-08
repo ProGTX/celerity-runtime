@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cassert>
 #include <pthread.h>
 #include <sched.h>
 #include <unistd.h>
@@ -14,9 +15,9 @@ void affinity_int_base_mask() {
 	initialized = true;
 }
 
-uint32 affinity_cores_available() {
+uint32_t affinity_cores_available() {
 	affinity_int_base_mask();
-	uint32 count = 0;
+	uint32_t count = 0;
 	for(auto i = 0; i < CPU_SETSIZE; i++) {
 		if(CPU_ISSET(i, &g_affinity_base_mask)) { ++count; }
 	}

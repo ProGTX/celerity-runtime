@@ -2,10 +2,10 @@
 
 #ifdef _WIN32
 
-#include "affinity.win.h"
+#include "platform_specific/affinity.win.h"
 
 #else
 
-#include "affinity.unix.h"
+#include "platform_specific/affinity.unix.h"
 
 #endif

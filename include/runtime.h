@@ -91,8 +91,8 @@ namespace detail {
 
 		uint64_t sync_id = 0;
 
-		// a priori wee need 3 threads plus 1 for workers. This depends on the application invoking celerity.
-		const uint64_t min_cores_needed = 4;
+		// a priori we need 3 threads plus 1 for workers. This depends on the application invoking celerity.
+		constexpr static uint64_t min_cores_needed = 4;
 
 		// We reserve the upper half of command IDs for control commands.
 		command_id next_control_command_id = command_id(1) << (std::numeric_limits<command_id::underlying_t>::digits - 1);
