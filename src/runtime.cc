@@ -12,7 +12,6 @@
 
 #include <mpi.h>
 
-#include "affinity.imp.h"
 #include "buffer.h"
 #include "buffer_manager.h"
 #include "command_graph.h"
@@ -24,6 +23,7 @@
 #include "scheduler.h"
 #include "task_manager.h"
 #include "user_bench.h"
+#include "utils.h"
 
 #define CELERITY_STRINGIFY2(x) #x
 #define CELERITY_STRINGIFY(x) CELERITY_STRINGIFY2(x)
@@ -97,10 +97,7 @@ namespace detail {
 		cfg = std::make_unique<config>(argc, argv, *default_logger);
 		graph_logger->set_level(cfg->get_log_level());
 
-		uint32_t cores;
-		if((cores = affinity_cores_available()) < min_cores_needed) {
-			default_logger->warn(fmt::format("Too few cores available. Recomended: {}; available: {}", min_cores_needed, cores));
-		}
+		available_cores_check(default_logger);
 
 		experimental::bench::detail::user_benchmarker::initialize(*cfg, static_cast<node_id>(world_rank));
 

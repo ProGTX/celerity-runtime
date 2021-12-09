@@ -2,18 +2,13 @@
 
 #ifdef _WIN32
 
-#include <Windows.h>
-#include <io.h>
-typedef DWORD_PTR native_cpu_set;
+#include "platform_specific/affinity.win.h"
 
 #else
 
-#include <unistd.h>
-typedef cpu_set_t native_cpu_set;
+#include "platform_specific/affinity.unix.h"
 
 #endif
 
-static native_cpu_set g_affinity_base_mask;
-
-void affinity_int_base_mask();
-uint32_t affinity_cores_available();
+// a priori we need 3 threads plus 1 for workers. This depends on the application invoking celerity.
+constexpr static uint64_t min_cores_needed = 4;
