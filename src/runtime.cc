@@ -12,6 +12,7 @@
 
 #include <mpi.h>
 
+#include "affinity.h"
 #include "buffer.h"
 #include "buffer_manager.h"
 #include "command_graph.h"
@@ -97,7 +98,9 @@ namespace detail {
 		cfg = std::make_unique<config>(argc, argv, *default_logger);
 		graph_logger->set_level(cfg->get_log_level());
 
-		available_cores_check(default_logger);
+		if(uint32_t cores = affinity_cores_available(); cores < min_cores_needed) {
+			default_logger->warn(fmt::format("Too few cores available. Recomended: {}; available: {}", min_cores_needed, cores));
+		}
 
 		experimental::bench::detail::user_benchmarker::initialize(*cfg, static_cast<node_id>(world_rank));
 

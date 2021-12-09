@@ -152,6 +152,8 @@ set(SOURCES
   src/transformers/naive_split.cc
   src/user_bench.cc
   src/worker_job.cc
+  src/platform_specific/affinity.unix.cc
+  src/platform_specific/affinity.win.cc
 )
 
 add_library(
