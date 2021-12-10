@@ -7,16 +7,21 @@
 #include "affinity.h"
 #include "utils.h"
 
-typedef DWORD_PTR native_cpu_set;
+namespace celerity {
+namespace detail {
 
-uint32_t affinity_cores_available() {
-	native_cpu_set affinity_base_mask;
-	native_cpu_set sys_affinity_mask; // not really needed
-	assert(GetProcessAffinityMask(GetCurrentProcess(), &affinity_base_mask, &sys_affinity_mask) == 0 && "Error retrieving base affinity mask.");
+	uint32_t affinity_cores_available() {
+		using native_cpu_set = DWORD_PTR;
+		auto get_affinity = []() {
+			native_cpu_set affinity_base_mask;
+			native_cpu_set sys_affinity_mask; // not really needed
+			assert(GetProcessAffinityMask(GetCurrentProcess(), &affinity_base_mask, &sys_affinity_mask) == 0 && "Error retrieving base affinity mask.");
+			return celerity::details::popcount(affinity_base_mask);
+		};
+		static uint32_t count = get_affinity();
+		return count;
+	}
 
-	static uint32_t count = celerity::details::popcount(affinity_base_mask);
-
-	return count;
-}
-
+} // namespace detail
+} // namespace celerity
 #endif
