@@ -152,9 +152,13 @@ set(SOURCES
   src/transformers/naive_split.cc
   src/user_bench.cc
   src/worker_job.cc
-  src/platform_specific/affinity.unix.cc
-  src/platform_specific/affinity.win.cc
 )
+
+if(WIN32)
+  set(SOURCES ${SOURCES} src/platform_specific/affinity.win.cc)
+ elseif(UNIX)
+  set(SOURCES ${SOURCES} src/platform_specific/affinity.unix.cc)
+endif()
 
 add_library(
   celerity_runtime

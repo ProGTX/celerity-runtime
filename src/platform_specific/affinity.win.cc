@@ -1,8 +1,6 @@
-#ifdef _WIN32
+#include <cassert>
 
 #include <Windows.h>
-#include <cassert.h>
-#include <io.h>
 
 #include "affinity.h"
 #include "utils.h"
@@ -14,9 +12,10 @@ namespace detail {
 		using native_cpu_set = DWORD_PTR;
 		auto get_affinity = []() {
 			native_cpu_set affinity_base_mask;
-			native_cpu_set sys_affinity_mask; // not really needed
-			assert(GetProcessAffinityMask(GetCurrentProcess(), &affinity_base_mask, &sys_affinity_mask) == 0 && "Error retrieving base affinity mask.");
-			return celerity::details::popcount(affinity_base_mask);
+			[[maybe_unused]] native_cpu_set sys_affinity_mask;
+			auto base_mask_error = GetProcessAffinityMask(GetCurrentProcess(), &affinity_base_mask, &sys_affinity_mask);
+			assert(base_mask_error == 0 && "Error retrieving base affinity mask.");
+			return celerity::detail::util::popcount(affinity_base_mask);
 		};
 		static uint32_t count = get_affinity();
 		return count;
@@ -24,4 +23,3 @@ namespace detail {
 
 } // namespace detail
 } // namespace celerity
-#endif
