@@ -6,6 +6,8 @@
 #include <sched.h>
 #include <unistd.h>
 
+#include "affinity.h"
+
 namespace celerity {
 namespace detail {
 

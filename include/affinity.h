@@ -1,7 +1,10 @@
 #pragma once
 
+
 namespace celerity {
 namespace detail {
+
+#include <stdint.h>
 
 	uint32_t affinity_cores_available();
 
