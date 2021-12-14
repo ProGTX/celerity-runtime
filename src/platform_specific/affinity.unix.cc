@@ -19,14 +19,10 @@ namespace detail {
 	}
 
 	uint32_t affinity_cores_available() {
-		auto get_affinity = []() {
-			cpu_set_t affinity_base_mask;
-			auto base_mask_error = pthread_getaffinity_np(pthread_self(), sizeof(cpu_set_t), &affinity_base_mask);
-			assert(base_mask_error == 0 && "Error retrieving base affinity mask.");
-			return affinity_counter(affinity_base_mask);
-		};
-		static auto count = get_affinity();
-		return count;
+		cpu_set_t affinity_base_mask;
+		auto base_mask_error = pthread_getaffinity_np(pthread_self(), sizeof(cpu_set_t), &affinity_base_mask);
+		assert(base_mask_error == 0 && "Error retrieving base affinity mask.");
+		return affinity_counter(affinity_base_mask);
 	}
 
 } // namespace detail
