@@ -98,7 +98,7 @@ namespace detail {
 		cfg = std::make_unique<config>(argc, argv, *default_logger);
 		graph_logger->set_level(cfg->get_log_level());
 
-		if(uint32_t cores = affinity_cores_available(); cores < min_cores_needed) {
+		if(const uint32_t cores = affinity_cores_available(); cores < min_cores_needed) {
 			default_logger->warn("Too few cores available. Recomended at least: {}; available: {}", min_cores_needed, cores);
 		}
 

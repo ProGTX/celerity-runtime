@@ -20,7 +20,7 @@ namespace detail {
 
 	uint32_t affinity_cores_available() {
 		cpu_set_t affinity_base_mask;
-		auto base_mask_error = pthread_getaffinity_np(pthread_self(), sizeof(cpu_set_t), &affinity_base_mask);
+		const auto base_mask_error = pthread_getaffinity_np(pthread_self(), sizeof(cpu_set_t), &affinity_base_mask);
 		assert(base_mask_error == 0 && "Error retrieving base affinity mask.");
 		return affinity_counter(affinity_base_mask);
 	}

@@ -13,9 +13,9 @@ namespace detail {
 
 		native_cpu_set affinity_base_mask;
 		[[maybe_unused]] native_cpu_set sys_affinity_mask;
-		auto base_mask_error = GetProcessAffinityMask(GetCurrentProcess(), &affinity_base_mask, &sys_affinity_mask);
+		const auto base_mask_error = GetProcessAffinityMask(GetCurrentProcess(), &affinity_base_mask, &sys_affinity_mask);
 		assert(base_mask_error == 0 && "Error retrieving base affinity mask.");
-		return celerity::detail::util::popcount(affinity_base_mask);
+		return util::popcount(affinity_base_mask);
 	}
 
 } // namespace detail
