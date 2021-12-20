@@ -5,7 +5,7 @@
 
 namespace celerity {
 namespace detail {
-	namespace util {
+	namespace utils {
 
 		template <typename BitMaskT>
 		constexpr inline uint32_t popcount(const BitMaskT bit_mask) noexcept {
@@ -18,6 +18,6 @@ namespace detail {
 			return counter;
 		}
 
-	} // namespace util
+	} // namespace utils
 } // namespace detail
 } // namespace celerity

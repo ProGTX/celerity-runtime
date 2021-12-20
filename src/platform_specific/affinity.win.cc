@@ -11,11 +11,11 @@ namespace detail {
 	uint32_t affinity_cores_available() {
 		using native_cpu_set = DWORD_PTR;
 
-		native_cpu_set affinity_base_mask;
+		native_cpu_set available_cores;
 		[[maybe_unused]] native_cpu_set sys_affinity_mask;
-		const auto base_mask_error = GetProcessAffinityMask(GetCurrentProcess(), &affinity_base_mask, &sys_affinity_mask);
-		assert(base_mask_error == 0 && "Error retrieving base affinity mask.");
-		return util::popcount(affinity_base_mask);
+		const auto affinity_error = GetProcessAffinityMask(GetCurrentProcess(), &available_cores, &sys_affinity_mask);
+		assert(affinity_error == 0 && "Error retrieving base affinity mask.");
+		return utils::popcount(available_cores);
 	}
 
 } // namespace detail

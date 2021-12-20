@@ -99,7 +99,9 @@ namespace detail {
 		graph_logger->set_level(cfg->get_log_level());
 
 		if(const uint32_t cores = affinity_cores_available(); cores < min_cores_needed) {
-			default_logger->warn("Too few cores available. Recomended at least: {}; available: {}", min_cores_needed, cores);
+			default_logger->warn("Celerity has detected that only {} logical cores are available to this process. It is recommended to assign at least {} "
+			                     "logical cores. Performance may be negatively impacted.",
+			    cores, min_cores_needed);
 		}
 
 		experimental::bench::detail::user_benchmarker::initialize(*cfg, static_cast<node_id>(world_rank));
