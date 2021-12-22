@@ -13,7 +13,7 @@ namespace detail {
 	uint32_t affinity_cores_available() {
 		cpu_set_t available_cores;
 		const auto affinity_error = pthread_getaffinity_np(pthread_self(), sizeof(cpu_set_t), &available_cores);
-		assert(affinity_error == 0 && "Error retrieving base affinity mask.");
+		assert(affinity_error == 0 && "Error retrieving affinity mask.");
 		return CPU_COUNT(&available_cores);
 	}
 
