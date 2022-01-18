@@ -38,6 +38,7 @@ class host_object_manager {
 	std::unordered_set<host_object_id> objects;
 };
 
+// Base for `state` structs in all host_object specializations: registers and unregisters host_objects with the host_object_manager.
 struct host_object_tracker {
 	detail::host_object_id id{};
 
