@@ -6,7 +6,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 set(CELERITY_CMAKE_DIR "${PROJECT_SOURCE_DIR}/cmake")
 set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH}" "${CELERITY_CMAKE_DIR}")
-find_package(MPI 2.0 REQUIRED)
+find_package(MPI 2.0)
 find_package(Threads REQUIRED)
 
 set(CELERITY_SYCL_IMPL "OFF" CACHE STRING "hipSYCL|ComputeCpp|DPC++")
@@ -201,7 +201,6 @@ target_include_directories(celerity_runtime PUBLIC
 
 target_link_libraries(celerity_runtime PUBLIC
   Threads::Threads
-  MPI::MPI_CXX
   spdlog::spdlog
 )
 
