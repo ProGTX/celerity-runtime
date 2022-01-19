@@ -1,7 +1,7 @@
 #pragma once
 
 #include <CL/sycl.hpp>
-#include <sycl/sycl.hpp>
+#include <SYCL/sycl.hpp>
 
 // TODO: Don't pollute preprocessor namespace with generic "WORKAROUND" names, prefix with "CELERITY".
 
